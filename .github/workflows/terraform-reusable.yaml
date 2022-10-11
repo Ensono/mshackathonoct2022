@@ -134,10 +134,6 @@ jobs:
   terraformCD:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    strategy:
-      matrix:
-        environment: ${{ inputs.environment }}
-        region: ${{ inputs.region }}
     steps:
     - name: HashiCorp - Setup Terraform
       uses: hashicorp/setup-terraform@v2.0.0
