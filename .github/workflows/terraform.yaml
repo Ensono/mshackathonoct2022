@@ -1,13 +1,33 @@
-name: Terraform
+# name: Terraform
+
+# on:
+#   push:
+#     branches:
+#     - main
+#   pull_request:
+#     branches:
+#     - main
+
+# jobs:
+#   terraform:
+#     uses: ./.github/workflows/terraform-reusable.yaml
+
+
+name: Test az login
 
 on:
-  push:
-    branches:
-    - main
-  pull_request:
-    branches:
-    - main
+  workflow_dispatch:
 
 jobs:
-  terraform:
-    uses: ./.github/workflows/terraform-reusable.yaml
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # Checks out the repository this file is in
+    - uses: actions/checkout@master
+   
+    # Logs in with your Azure credentials
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        allow-no-subscriptions: true
