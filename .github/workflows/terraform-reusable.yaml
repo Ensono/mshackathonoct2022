@@ -2,36 +2,39 @@ name: Terraform-Reusable
 
 on:
   workflow_call:
-    # inputs:
-    #   environment:
-    #     description: 'Environment to deploy to'
-    #     required: false
-    #     type: string
-    #     default: 'prod'
-    #   region:
-    #     description: 'Region to deploy to'
-    #     required: false
-    #     type: string
-    #     default: 'uks'
-    #   storageaccount:
-    #     required: false
-    #     type: string
-    #     default: 'mshackathonoct2022st'
-    #   container:
-    #     required: false
-    #     type: string
-    #     default: 'terraform'
-    #   key:
-    #     required: false
-    #     type: string
-    #     default: 'produks.tfstate'
-    #   terraformparams:
-    #     required: false
-    #     type: string
-    #   terraformver:
-    #     type: string
-    #     required: false
-    #     default: '1.3.1'
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: false
+        type: string
+        default: 'prod'
+      region:
+        description: 'Region to deploy to'
+        required: false
+        type: string
+        default: 'uks'
+      storageaccount:
+        required: false
+        type: string
+        default: 'mshackathonoct2022st'
+      container:
+        required: false
+        type: string
+        default: 'terraform'
+      key:
+        required: false
+        type: string
+        default: 'produks.tfstate'
+      terraformparams:
+        required: false
+        type: string
+      terraformver:
+        type: string
+        required: false
+        default: '1.3.1'
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
 
 jobs:
   terraformCI:
