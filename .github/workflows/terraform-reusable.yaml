@@ -31,7 +31,7 @@ on:
       terraformver:
         type: string
         required: false
-        default: '1.3.2'
+        default: '1.3.1'
 
 jobs:
   terraformCI:
@@ -132,6 +132,7 @@ jobs:
         retention-days: 5
       if: github.event_name != 'pull_request'
   terraformCD:
+    needs: terraformCI
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     steps:
@@ -146,4 +147,4 @@ jobs:
         path: "$GITHUB_WORKSPACE"
     - name: terraform apply
       id: apply
-      run: terraform -input=false $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan"
+      run: terraform apply -input=false $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
