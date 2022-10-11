@@ -44,110 +44,110 @@ jobs:
     - uses: Azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    # - name: Prepare environment variables
-    #   env:
-    #     AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-    #   run: |
-    #       # Parse Azure secret into Terraform variables
-    #       $servicePrincipal = ($env:AZURE_CREDENTIALS | ConvertFrom-Json)
-    #       $env:ARM_CLIENT_ID = $servicePrincipal.clientId
-    #       $env:ARM_CLIENT_SECRET = $servicePrincipal.clientSecret
-    #       $env:ARM_SUBSCRIPTION_ID = $servicePrincipal.subscriptionId
-    #       $env:ARM_TENANT_ID = $servicePrincipal.tenantId
-    #       # Save environment variable setup for subsequent steps
-    #       Get-ChildItem -Path Env: -Recurse -Include ARM_*,TF_VAR_* | ForEach-Object {Write-Output "$($_.Name)=$($_.Value)"} >> $env:GITHUB_ENV
-    # - name: HashiCorp - Setup Terraform
-    #   uses: hashicorp/setup-terraform@v2.0.0
-    #   with:
-    #     terraform_version: ${{ inputs.terraformver }}
-  #   - name: terraform init
-  #     id: init
-  #     run: terraform init -input=false --backend-config="storage_account_name=${{ inputs.storageaccount }}" --backend-config="container_name=${{ inputs.container }}" --backend-config="resource_group_name=${{ inputs.resourcegroup }}" --backend-config="key=${{ inputs.key }}"
-  #   - name: terraform fmt check
-  #     id: fmt
-  #     run: terraform fmt -check -recursive
-  #     if: github.event_name == 'pull_request'
-  #   - name: terraform validate
-  #     id: validate
-  #     run: terraform validate
-  #     if: github.event_name == 'pull_request'
-  #   - name: terraform plan
-  #     id: plan
-  #     run: terraform plan -input=false -var-file=global.tfvars -var-file=${{ inputs.environment }}-${{ inputs.region }}.tfvars ${{ inputs.terraformparams }} -out=$GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
-  #     continue-on-error: true
-  #   - name: Update Pull Request
-  #     uses: actions/github-script@v6
-  #     if: github.event_name == 'pull_request'
-  #     env:
-  #       PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-  #     with:
-  #       github-token: ${{ secrets.GITHUB_TOKEN }}
-  #       script: |
-  #         const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-  #         #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-  #         #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-  #         #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+    - name: Prepare environment variables
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      run: |
+          # Parse Azure secret into Terraform variables
+          $servicePrincipal = ($env:AZURE_CREDENTIALS | ConvertFrom-Json)
+          $env:ARM_CLIENT_ID = $servicePrincipal.clientId
+          $env:ARM_CLIENT_SECRET = $servicePrincipal.clientSecret
+          $env:ARM_SUBSCRIPTION_ID = $servicePrincipal.subscriptionId
+          $env:ARM_TENANT_ID = $servicePrincipal.tenantId
+          # Save environment variable setup for subsequent steps
+          Get-ChildItem -Path Env: -Recurse -Include ARM_*,TF_VAR_* | ForEach-Object {Write-Output "$($_.Name)=$($_.Value)"} >> $env:GITHUB_ENV
+    - name: HashiCorp - Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.0
+      with:
+        terraform_version: ${{ inputs.terraformver }}
+    - name: terraform init
+      id: init
+      run: terraform init -input=false --backend-config="storage_account_name=${{ inputs.storageaccount }}" --backend-config="container_name=${{ inputs.container }}" --backend-config="resource_group_name=${{ inputs.resourcegroup }}" --backend-config="key=${{ inputs.key }}"
+    - name: terraform fmt check
+      id: fmt
+      run: terraform fmt -check -recursive
+      if: github.event_name == 'pull_request'
+    - name: terraform validate
+      id: validate
+      run: terraform validate
+      if: github.event_name == 'pull_request'
+    - name: terraform plan
+      id: plan
+      run: terraform plan -input=false -var-file=global.tfvars -var-file=${{ inputs.environment }}-${{ inputs.region }}.tfvars ${{ inputs.terraformparams }} -out=$GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
+      continue-on-error: true
+    - name: Update Pull Request
+      uses: actions/github-script@v6
+      if: github.event_name == 'pull_request'
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
 
-  #         <details><summary>Show Plan</summary>
+          <details><summary>Show Plan</summary>
 
-  #         \`\`\`\n
-  #         ${process.env.PLAN}
-  #         \`\`\`
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
 
-  #         </details>
+          </details>
 
-  #         *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+          *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
 
-  #         github.rest.issues.createComment({
-  #           issue_number: context.issue.number,
-  #           owner: context.repo.owner,
-  #           repo: context.repo.repo,
-  #           body: output
-  #         })
-  #   - name: terraform json plan
-  #     id: jsonplan
-  #     run: terraform show -json $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan | jq "." > $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json
-  #     if: github.event_name == 'pull_request'
-  #   - name: Install checkov
-  #     id: checkovinstall
-  #     run: pip3 install checkov
-  #     shell: bash
-  #     if: github.event_name == 'pull_request'
-  #   - name: Checkov Static Code Analysis
-  #     id: checkov-report
-  #     run: |
-  #       mkdir $GITHUB_WORKSPACE/checkov-report
-  #       checkov -f $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json --output junitxml --output-file-path $GITHUB_WORKSPACE/checkov-report/TEST-checkov-report.xml
-  #     shell: bash
-  #     if: github.event_name == 'pull_request'
-  #   - name: Publish checkov Test Results
-  #     uses: dorny/test-reporter@v1
-  #     with:
-  #       name: JEST Tests                  # Name of the check run which will be created
-  #       path: '$GITHUB_WORKSPACE/checkov-report/**/TEST-*.xml'                     # Path to test results (inside artifact .zip)
-  #       reporter: jest-junit              # Format of test results
-  #     if: github.event_name == 'pull_request' && (success() || failure())
-  #   - name: Upload Artifact
-  #     uses: actions/upload-artifact@v3.1.0
-  #     with:
-  #       name: "${{ inputs.environment }}-${{ inputs.region }}.tfplan"
-  #       path: "$GITHUB_WORKSPACE"
-  #       retention-days: 5
-  #     if: github.event_name != 'pull_request'
-  # terraformCD:
-  #   needs: terraformCI
-  #   runs-on: ubuntu-latest
-  #   if: github.event_name != 'pull_request'
-  #   steps:
-  #   - name: HashiCorp - Setup Terraform
-  #     uses: hashicorp/setup-terraform@v2.0.0
-  #     with:
-  #       terraform_version: ${{ inputs.terraformver }}
-  #   - name: Download Artifact
-  #     uses: actions/download-artifact@v3
-  #     with:
-  #       name: "${{ inputs.environment }}-${{ inputs.region }}.tfplan"
-  #       path: "$GITHUB_WORKSPACE"
-  #   - name: terraform apply
-  #     id: apply
-  #     run: terraform apply -input=false $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+    - name: terraform json plan
+      id: jsonplan
+      run: terraform show -json $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan | jq "." > $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json
+      if: github.event_name == 'pull_request'
+    - name: Install checkov
+      id: checkovinstall
+      run: pip3 install checkov
+      shell: bash
+      if: github.event_name == 'pull_request'
+    - name: Checkov Static Code Analysis
+      id: checkov-report
+      run: |
+        mkdir $GITHUB_WORKSPACE/checkov-report
+        checkov -f $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json --output junitxml --output-file-path $GITHUB_WORKSPACE/checkov-report/TEST-checkov-report.xml
+      shell: bash
+      if: github.event_name == 'pull_request'
+    - name: Publish checkov Test Results
+      uses: dorny/test-reporter@v1
+      with:
+        name: JEST Tests                  # Name of the check run which will be created
+        path: '$GITHUB_WORKSPACE/checkov-report/**/TEST-*.xml'                     # Path to test results (inside artifact .zip)
+        reporter: jest-junit              # Format of test results
+      if: github.event_name == 'pull_request' && (success() || failure())
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: "${{ inputs.environment }}-${{ inputs.region }}.tfplan"
+        path: "$GITHUB_WORKSPACE"
+        retention-days: 5
+      if: github.event_name != 'pull_request'
+  terraformCD:
+    needs: terraformCI
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    steps:
+    - name: HashiCorp - Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.0
+      with:
+        terraform_version: ${{ inputs.terraformver }}
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: "${{ inputs.environment }}-${{ inputs.region }}.tfplan"
+        path: "$GITHUB_WORKSPACE"
+    - name: terraform apply
+      id: apply
+      run: terraform apply -input=false $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
