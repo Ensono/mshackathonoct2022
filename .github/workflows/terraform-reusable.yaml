@@ -56,6 +56,7 @@ jobs:
           $env:ARM_TENANT_ID = $servicePrincipal.tenantId
           # Save environment variable setup for subsequent steps
           Get-ChildItem -Path Env: -Recurse -Include ARM_*,TF_VAR_* | ForEach-Object {Write-Output "$($_.Name)=$($_.Value)"} >> $env:GITHUB_ENV
+      shell: pwsh
     - name: HashiCorp - Setup Terraform
       uses: hashicorp/setup-terraform@v2.0.0
       with:
