@@ -10,4 +10,4 @@ on:
 
 jobs:
   terraform:
-    uses: ./.github/workflows/terraform-reusable.yml
+    uses: ./.github/workflows/terraform-reusable.yaml
