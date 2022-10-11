@@ -1,4 +1,4 @@
-name: Terraform
+name: Terraform-Reusable
 
 on:
   workflow_call:
@@ -70,7 +70,7 @@ jobs:
       if: github.event_name == 'pull_request'
     - name: terraform plan
       id: plan
-      run: terraform plan -input=false -var-file=global.tfvars -var-file=${{ inputs.environment }}-${{ inputs.region }}.tfvars ${{ input.terraformparams }} -out=$GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
+      run: terraform plan -input=false -var-file=global.tfvars -var-file=${{ inputs.environment }}-${{ inputs.region }}.tfvars ${{ inputs.terraformparams }} -out=$GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
       continue-on-error: true
     - name: Update Pull Request
       uses: actions/github-script@v6
