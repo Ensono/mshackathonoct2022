@@ -1,0 +1,769 @@
+{
+  "format_version": "1.1",
+  "terraform_version": "1.3.1",
+  "variables": {
+    "location": {
+      "value": "UK South"
+    },
+    "resource_group": {
+      "value": "mshackathonoct2022"
+    }
+  },
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "azurerm_application_insights.this",
+          "mode": "managed",
+          "type": "azurerm_application_insights",
+          "name": "this",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 1,
+          "values": {
+            "application_type": "web",
+            "disable_ip_masking": false,
+            "force_customer_storage_for_profiler": false,
+            "internet_ingestion_enabled": true,
+            "internet_query_enabled": true,
+            "local_authentication_disabled": false,
+            "location": "uksouth",
+            "name": "mshackathonoct2022mlw-ai",
+            "resource_group_name": "mshackathonoct2022",
+            "retention_in_days": 90,
+            "sampling_percentage": 100,
+            "tags": null,
+            "timeouts": null,
+            "workspace_id": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "azurerm_container_registry.this",
+          "mode": "managed",
+          "type": "azurerm_container_registry",
+          "name": "this",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 2,
+          "values": {
+            "admin_enabled": false,
+            "anonymous_pull_enabled": null,
+            "data_endpoint_enabled": null,
+            "export_policy_enabled": true,
+            "georeplications": [],
+            "identity": [],
+            "location": "uksouth",
+            "name": "mshackathonoct2022mlcr",
+            "network_rule_bypass_option": "AzureServices",
+            "public_network_access_enabled": true,
+            "quarantine_policy_enabled": null,
+            "resource_group_name": "mshackathonoct2022",
+            "sku": "Standard",
+            "tags": null,
+            "timeouts": null,
+            "zone_redundancy_enabled": false
+          },
+          "sensitive_values": {
+            "encryption": [],
+            "georeplications": [],
+            "identity": [],
+            "network_rule_set": [],
+            "retention_policy": [],
+            "trust_policy": []
+          }
+        },
+        {
+          "address": "azurerm_key_vault.this",
+          "mode": "managed",
+          "type": "azurerm_key_vault",
+          "name": "this",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 2,
+          "values": {
+            "contact": [],
+            "enable_rbac_authorization": null,
+            "enabled_for_deployment": null,
+            "enabled_for_disk_encryption": null,
+            "enabled_for_template_deployment": null,
+            "location": "uksouth",
+            "name": "mshackathonoct2022mlw-kv",
+            "public_network_access_enabled": true,
+            "purge_protection_enabled": null,
+            "resource_group_name": "mshackathonoct2022",
+            "sku_name": "standard",
+            "soft_delete_retention_days": 90,
+            "tags": null,
+            "tenant_id": "f88c76e1-2e79-4cd5-8b37-842f3f870d58",
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "access_policy": [],
+            "contact": [],
+            "network_acls": []
+          }
+        },
+        {
+          "address": "azurerm_machine_learning_workspace.example",
+          "mode": "managed",
+          "type": "azurerm_machine_learning_workspace",
+          "name": "example",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 0,
+          "values": {
+            "description": null,
+            "encryption": [],
+            "friendly_name": null,
+            "high_business_impact": null,
+            "identity": [
+              {
+                "identity_ids": null,
+                "type": "SystemAssigned"
+              }
+            ],
+            "image_build_compute_name": null,
+            "location": "uksouth",
+            "name": "mshackathonoct2022mlw",
+            "primary_user_assigned_identity": null,
+            "public_access_behind_virtual_network_enabled": null,
+            "resource_group_name": "mshackathonoct2022",
+            "sku_name": "Basic",
+            "tags": null,
+            "timeouts": null,
+            "v1_legacy_mode_enabled": false
+          },
+          "sensitive_values": {
+            "encryption": [],
+            "identity": [
+              {}
+            ]
+          }
+        },
+        {
+          "address": "azurerm_storage_account.this",
+          "mode": "managed",
+          "type": "azurerm_storage_account",
+          "name": "this",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 3,
+          "values": {
+            "account_kind": "StorageV2",
+            "account_replication_type": "LRS",
+            "account_tier": "Standard",
+            "allow_nested_items_to_be_public": true,
+            "azure_files_authentication": [],
+            "cross_tenant_replication_enabled": true,
+            "custom_domain": [],
+            "customer_managed_key": [],
+            "default_to_oauth_authentication": false,
+            "edge_zone": null,
+            "enable_https_traffic_only": true,
+            "identity": [],
+            "infrastructure_encryption_enabled": false,
+            "is_hns_enabled": false,
+            "location": "uksouth",
+            "min_tls_version": "TLS1_2",
+            "name": "mshackathonoct2022mlwst",
+            "nfsv3_enabled": false,
+            "public_network_access_enabled": true,
+            "queue_encryption_key_type": "Service",
+            "resource_group_name": "mshackathonoct2022",
+            "shared_access_key_enabled": true,
+            "static_website": [],
+            "table_encryption_key_type": "Service",
+            "tags": null,
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "azure_files_authentication": [],
+            "blob_properties": [],
+            "custom_domain": [],
+            "customer_managed_key": [],
+            "identity": [],
+            "network_rules": [],
+            "queue_properties": [],
+            "routing": [],
+            "share_properties": [],
+            "static_website": []
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "azurerm_application_insights.this",
+      "mode": "managed",
+      "type": "azurerm_application_insights",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "application_type": "web",
+          "disable_ip_masking": false,
+          "force_customer_storage_for_profiler": false,
+          "internet_ingestion_enabled": true,
+          "internet_query_enabled": true,
+          "local_authentication_disabled": false,
+          "location": "uksouth",
+          "name": "mshackathonoct2022mlw-ai",
+          "resource_group_name": "mshackathonoct2022",
+          "retention_in_days": 90,
+          "sampling_percentage": 100,
+          "tags": null,
+          "timeouts": null,
+          "workspace_id": null
+        },
+        "after_unknown": {
+          "app_id": true,
+          "connection_string": true,
+          "daily_data_cap_in_gb": true,
+          "daily_data_cap_notifications_disabled": true,
+          "id": true,
+          "instrumentation_key": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "connection_string": true,
+          "instrumentation_key": true
+        }
+      }
+    },
+    {
+      "address": "azurerm_container_registry.this",
+      "mode": "managed",
+      "type": "azurerm_container_registry",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "admin_enabled": false,
+          "anonymous_pull_enabled": null,
+          "data_endpoint_enabled": null,
+          "export_policy_enabled": true,
+          "georeplications": [],
+          "identity": [],
+          "location": "uksouth",
+          "name": "mshackathonoct2022mlcr",
+          "network_rule_bypass_option": "AzureServices",
+          "public_network_access_enabled": true,
+          "quarantine_policy_enabled": null,
+          "resource_group_name": "mshackathonoct2022",
+          "sku": "Standard",
+          "tags": null,
+          "timeouts": null,
+          "zone_redundancy_enabled": false
+        },
+        "after_unknown": {
+          "admin_password": true,
+          "admin_username": true,
+          "encryption": true,
+          "georeplications": [],
+          "id": true,
+          "identity": [],
+          "login_server": true,
+          "network_rule_set": true,
+          "retention_policy": true,
+          "trust_policy": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "admin_password": true,
+          "encryption": [],
+          "georeplications": [],
+          "identity": [],
+          "network_rule_set": [],
+          "retention_policy": [],
+          "trust_policy": []
+        }
+      }
+    },
+    {
+      "address": "azurerm_key_vault.this",
+      "mode": "managed",
+      "type": "azurerm_key_vault",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "contact": [],
+          "enable_rbac_authorization": null,
+          "enabled_for_deployment": null,
+          "enabled_for_disk_encryption": null,
+          "enabled_for_template_deployment": null,
+          "location": "uksouth",
+          "name": "mshackathonoct2022mlw-kv",
+          "public_network_access_enabled": true,
+          "purge_protection_enabled": null,
+          "resource_group_name": "mshackathonoct2022",
+          "sku_name": "standard",
+          "soft_delete_retention_days": 90,
+          "tags": null,
+          "tenant_id": "f88c76e1-2e79-4cd5-8b37-842f3f870d58",
+          "timeouts": null
+        },
+        "after_unknown": {
+          "access_policy": true,
+          "contact": [],
+          "id": true,
+          "network_acls": true,
+          "vault_uri": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "access_policy": [],
+          "contact": [],
+          "network_acls": []
+        }
+      }
+    },
+    {
+      "address": "azurerm_machine_learning_workspace.example",
+      "mode": "managed",
+      "type": "azurerm_machine_learning_workspace",
+      "name": "example",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "description": null,
+          "encryption": [],
+          "friendly_name": null,
+          "high_business_impact": null,
+          "identity": [
+            {
+              "identity_ids": null,
+              "type": "SystemAssigned"
+            }
+          ],
+          "image_build_compute_name": null,
+          "location": "uksouth",
+          "name": "mshackathonoct2022mlw",
+          "primary_user_assigned_identity": null,
+          "public_access_behind_virtual_network_enabled": null,
+          "resource_group_name": "mshackathonoct2022",
+          "sku_name": "Basic",
+          "tags": null,
+          "timeouts": null,
+          "v1_legacy_mode_enabled": false
+        },
+        "after_unknown": {
+          "application_insights_id": true,
+          "container_registry_id": true,
+          "discovery_url": true,
+          "encryption": [],
+          "id": true,
+          "identity": [
+            {
+              "principal_id": true,
+              "tenant_id": true
+            }
+          ],
+          "key_vault_id": true,
+          "public_network_access_enabled": true,
+          "storage_account_id": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "encryption": [],
+          "identity": [
+            {}
+          ]
+        }
+      }
+    },
+    {
+      "address": "azurerm_storage_account.this",
+      "mode": "managed",
+      "type": "azurerm_storage_account",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "account_kind": "StorageV2",
+          "account_replication_type": "LRS",
+          "account_tier": "Standard",
+          "allow_nested_items_to_be_public": true,
+          "azure_files_authentication": [],
+          "cross_tenant_replication_enabled": true,
+          "custom_domain": [],
+          "customer_managed_key": [],
+          "default_to_oauth_authentication": false,
+          "edge_zone": null,
+          "enable_https_traffic_only": true,
+          "identity": [],
+          "infrastructure_encryption_enabled": false,
+          "is_hns_enabled": false,
+          "location": "uksouth",
+          "min_tls_version": "TLS1_2",
+          "name": "mshackathonoct2022mlwst",
+          "nfsv3_enabled": false,
+          "public_network_access_enabled": true,
+          "queue_encryption_key_type": "Service",
+          "resource_group_name": "mshackathonoct2022",
+          "shared_access_key_enabled": true,
+          "static_website": [],
+          "table_encryption_key_type": "Service",
+          "tags": null,
+          "timeouts": null
+        },
+        "after_unknown": {
+          "access_tier": true,
+          "azure_files_authentication": [],
+          "blob_properties": true,
+          "custom_domain": [],
+          "customer_managed_key": [],
+          "id": true,
+          "identity": [],
+          "large_file_share_enabled": true,
+          "network_rules": true,
+          "primary_access_key": true,
+          "primary_blob_connection_string": true,
+          "primary_blob_endpoint": true,
+          "primary_blob_host": true,
+          "primary_connection_string": true,
+          "primary_dfs_endpoint": true,
+          "primary_dfs_host": true,
+          "primary_file_endpoint": true,
+          "primary_file_host": true,
+          "primary_location": true,
+          "primary_queue_endpoint": true,
+          "primary_queue_host": true,
+          "primary_table_endpoint": true,
+          "primary_table_host": true,
+          "primary_web_endpoint": true,
+          "primary_web_host": true,
+          "queue_properties": true,
+          "routing": true,
+          "secondary_access_key": true,
+          "secondary_blob_connection_string": true,
+          "secondary_blob_endpoint": true,
+          "secondary_blob_host": true,
+          "secondary_connection_string": true,
+          "secondary_dfs_endpoint": true,
+          "secondary_dfs_host": true,
+          "secondary_file_endpoint": true,
+          "secondary_file_host": true,
+          "secondary_location": true,
+          "secondary_queue_endpoint": true,
+          "secondary_queue_host": true,
+          "secondary_table_endpoint": true,
+          "secondary_table_host": true,
+          "secondary_web_endpoint": true,
+          "secondary_web_host": true,
+          "share_properties": true,
+          "static_website": []
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "azure_files_authentication": [],
+          "blob_properties": [],
+          "custom_domain": [],
+          "customer_managed_key": [],
+          "identity": [],
+          "network_rules": [],
+          "primary_access_key": true,
+          "primary_blob_connection_string": true,
+          "primary_connection_string": true,
+          "queue_properties": [],
+          "routing": [],
+          "secondary_access_key": true,
+          "secondary_blob_connection_string": true,
+          "secondary_connection_string": true,
+          "share_properties": [],
+          "static_website": []
+        }
+      }
+    }
+  ],
+  "prior_state": {
+    "format_version": "1.0",
+    "terraform_version": "1.3.1",
+    "values": {
+      "root_module": {
+        "resources": [
+          {
+            "address": "data.azurerm_client_config.current",
+            "mode": "data",
+            "type": "azurerm_client_config",
+            "name": "current",
+            "provider_name": "registry.terraform.io/hashicorp/azurerm",
+            "schema_version": 0,
+            "values": {
+              "client_id": "04b07795-8ddb-461a-bbee-02f9e1bf7b46",
+              "id": "Y2xpZW50Q29uZmlncy9jbGllbnRJZD0wNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDY7b2JqZWN0SWQ9YjFjMTU4NDAtMTEzNy00NDI1LTljOTQtNThiM2RiYmIyODkxO3N1YnNjcmlwdGlvbklkPWM1ZDI2NTVlLWM4YzMtNDU5NC1hYzY5LWE2MjZhYjUwZDI4MTt0ZW5hbnRJZD1mODhjNzZlMS0yZTc5LTRjZDUtOGIzNy04NDJmM2Y4NzBkNTg=",
+              "object_id": "b1c15840-1137-4425-9c94-58b3dbbb2891",
+              "subscription_id": "c5d2655e-c8c3-4594-ac69-a626ab50d281",
+              "tenant_id": "f88c76e1-2e79-4cd5-8b37-842f3f870d58",
+              "timeouts": null
+            },
+            "sensitive_values": {}
+          }
+        ]
+      }
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "azuread": {
+        "name": "azuread",
+        "full_name": "registry.terraform.io/hashicorp/azuread",
+        "version_constraint": "~> 2.29.0",
+        "expressions": {
+          "tenant_id": {
+            "constant_value": "f88c76e1-2e79-4cd5-8b37-842f3f870d58"
+          }
+        }
+      },
+      "azurerm": {
+        "name": "azurerm",
+        "full_name": "registry.terraform.io/hashicorp/azurerm",
+        "version_constraint": "~> 3.26.0",
+        "expressions": {
+          "features": [
+            {}
+          ]
+        }
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "azurerm_application_insights.this",
+          "mode": "managed",
+          "type": "azurerm_application_insights",
+          "name": "this",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "application_type": {
+              "constant_value": "web"
+            },
+            "location": {
+              "references": [
+                "var.location"
+              ]
+            },
+            "name": {
+              "constant_value": "mshackathonoct2022mlw-ai"
+            },
+            "resource_group_name": {
+              "references": [
+                "var.resource_group"
+              ]
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "azurerm_container_registry.this",
+          "mode": "managed",
+          "type": "azurerm_container_registry",
+          "name": "this",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "admin_enabled": {
+              "constant_value": false
+            },
+            "location": {
+              "references": [
+                "var.location"
+              ]
+            },
+            "name": {
+              "constant_value": "mshackathonoct2022mlcr"
+            },
+            "resource_group_name": {
+              "references": [
+                "var.resource_group"
+              ]
+            },
+            "sku": {
+              "constant_value": "Standard"
+            }
+          },
+          "schema_version": 2
+        },
+        {
+          "address": "azurerm_key_vault.this",
+          "mode": "managed",
+          "type": "azurerm_key_vault",
+          "name": "this",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "location": {
+              "references": [
+                "var.location"
+              ]
+            },
+            "name": {
+              "constant_value": "mshackathonoct2022mlw-kv"
+            },
+            "resource_group_name": {
+              "references": [
+                "var.resource_group"
+              ]
+            },
+            "sku_name": {
+              "constant_value": "standard"
+            },
+            "tenant_id": {
+              "references": [
+                "data.azurerm_client_config.current.tenant_id",
+                "data.azurerm_client_config.current"
+              ]
+            }
+          },
+          "schema_version": 2
+        },
+        {
+          "address": "azurerm_machine_learning_workspace.example",
+          "mode": "managed",
+          "type": "azurerm_machine_learning_workspace",
+          "name": "example",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "application_insights_id": {
+              "references": [
+                "azurerm_application_insights.this.id",
+                "azurerm_application_insights.this"
+              ]
+            },
+            "container_registry_id": {
+              "references": [
+                "azurerm_container_registry.this.id",
+                "azurerm_container_registry.this"
+              ]
+            },
+            "identity": [
+              {
+                "type": {
+                  "constant_value": "SystemAssigned"
+                }
+              }
+            ],
+            "key_vault_id": {
+              "references": [
+                "azurerm_key_vault.this.id",
+                "azurerm_key_vault.this"
+              ]
+            },
+            "location": {
+              "references": [
+                "var.location"
+              ]
+            },
+            "name": {
+              "constant_value": "mshackathonoct2022mlw"
+            },
+            "resource_group_name": {
+              "references": [
+                "var.resource_group"
+              ]
+            },
+            "storage_account_id": {
+              "references": [
+                "azurerm_storage_account.this.id",
+                "azurerm_storage_account.this"
+              ]
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "azurerm_storage_account.this",
+          "mode": "managed",
+          "type": "azurerm_storage_account",
+          "name": "this",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "account_replication_type": {
+              "constant_value": "LRS"
+            },
+            "account_tier": {
+              "constant_value": "Standard"
+            },
+            "location": {
+              "references": [
+                "var.location"
+              ]
+            },
+            "name": {
+              "constant_value": "mshackathonoct2022mlwst"
+            },
+            "resource_group_name": {
+              "references": [
+                "var.resource_group"
+              ]
+            }
+          },
+          "schema_version": 3
+        },
+        {
+          "address": "data.azurerm_client_config.current",
+          "mode": "data",
+          "type": "azurerm_client_config",
+          "name": "current",
+          "provider_config_key": "azurerm",
+          "schema_version": 0
+        }
+      ],
+      "variables": {
+        "location": {
+          "default": "UK South"
+        },
+        "resource_group": {
+          "default": "mshackathonoct2022"
+        }
+      }
+    }
+  },
+  "relevant_attributes": [
+    {
+      "resource": "data.azurerm_client_config.current",
+      "attribute": [
+        "tenant_id"
+      ]
+    },
+    {
+      "resource": "azurerm_storage_account.this",
+      "attribute": [
+        "id"
+      ]
+    },
+    {
+      "resource": "azurerm_key_vault.this",
+      "attribute": [
+        "id"
+      ]
+    },
+    {
+      "resource": "azurerm_application_insights.this",
+      "attribute": [
+        "id"
+      ]
+    },
+    {
+      "resource": "azurerm_container_registry.this",
+      "attribute": [
+        "id"
+      ]
+    }
+  ]
+}
