@@ -11,6 +11,5 @@ on:
 jobs:
   terraform:
     uses: ./.github/workflows/terraform-reusable.yaml
-    with:
-      secrets:
-        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
