@@ -147,7 +147,7 @@ jobs:
       uses: actions/upload-artifact@v3.1.0
       with:
         name: "${{ inputs.environment }}-${{ inputs.region }}.tfplan"
-        path: "$GITHUB_WORKSPACE"
+        path: "./"
         retention-days: 5
       if: github.event_name != 'pull_request'
   terraformCD:
@@ -163,7 +163,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: "${{ inputs.environment }}-${{ inputs.region }}.tfplan"
-        path: "$GITHUB_WORKSPACE"
+        path: "./"
     - name: terraform apply
       id: apply
       run: terraform apply -input=false $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
