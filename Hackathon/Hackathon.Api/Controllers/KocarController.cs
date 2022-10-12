@@ -1,3 +1,4 @@
+using Hackathon.Api.ModelInput;
 using Hackathon.Api.Predictors;
 using Hackathon.Api.Request;
 using Hackathon.Api.Response;
@@ -19,8 +20,7 @@ public class KocarController : ControllerBase
     [HttpPost(Name = "GetKocarScore")]
     public ActionResult<KocarResponse> Post(KocarRequest request)
     {
-        var inputs = new float[]
-        {
+        var input = new KocarInput(
             request.Territ ? 1 : 0,
             request.UtsteinCohort ? 1 : 0,
             request.Vasc ? 1 : 0,
@@ -34,8 +34,8 @@ public class KocarController : ControllerBase
             request.NormalEcg ? 1 : 0,
             request.Ste ? 1 : 0,
             request.Rbbb ? 1 : 0,
-            request.Tte ? 1 : 0
-        };
-        return Ok(new KocarResponse(_kocarPredictor.PredictKocar(inputs)));
+            request.Tte ? 1 : 0);
+        
+        return Ok(new KocarResponse(_kocarPredictor.PredictKocar(input)));
     }
 }

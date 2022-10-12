@@ -1,4 +1,5 @@
-﻿using Microsoft.ML.OnnxRuntime;
+﻿using Hackathon.Api.ModelInput;
+using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace Hackathon.Api.Predictors;
@@ -19,15 +20,28 @@ public class KocarPredictor
         _logger.LogInformation("Loaded model from {TrainedModelPath}", TrainedModelPath);
     }
 
-    public float PredictKocar(float[] inputs)
+    public float PredictKocar(KocarInput input)
     {
+        var inputs = new float[]
+        {
+            input.Territ,
+            input.UtsteinCohort,
+            input.Vasc,
+            input.InitialRhythm,
+            input.Age,
+            input.NormalEcg,
+            input.Ste,
+            input.Rbbb,
+            input.Tte
+        };
         var inputTensor = new DenseTensor<float>(inputs, new[] { 1, 9 });
         var featuresInput = new List<NamedOnnxValue>
             { NamedOnnxValue.CreateFromTensor(TrainedModelInputTensorName, inputTensor) };
 
         using var output = _inferenceSession.Run(featuresInput);
         var result = output.Last().AsTensor<float>().GetValue(0);
-        _logger.LogInformation("Received inputs {Inputs}. Output = {Result}", inputs, result);
+        
+        _logger.LogInformation("KOCAR: Inputs: {Inputs}, Output: {Output}", input, result);
 
         return result;
     }
