@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Hackathon.Api.csproj", "Hackathon.Api/"]
 RUN dotnet restore "Hackathon.Api/Hackathon.Api.csproj"
-COPY . "HackathonApi/"
+COPY . "./Hackathon.Api"
 WORKDIR "/src/Hackathon.Api"
 RUN dotnet build "Hackathon.Api.csproj" -c Release -o /app/build
 
