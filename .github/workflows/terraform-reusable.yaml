@@ -113,25 +113,36 @@ jobs:
       id: jsonplan
       run: terraform-bin show -json $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan | jq "." > $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json
       if: github.event_name == 'pull_request'
-    - name: Install checkov
-      id: checkovinstall
-      run: brew install checkov
-      shell: bash
-      if: github.event_name == 'pull_request'
-    - name: Checkov Static Code Analysis
-      id: checkov-report
-      run: |
-        mkdir $GITHUB_WORKSPACE/checkov-report
-        checkov -f $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json --output junitxml --output-file-path $GITHUB_WORKSPACE/checkov-report
-      shell: bash
-      if: github.event_name == 'pull_request'
-    - name: Publish checkov Test Results
-      uses: dorny/test-reporter@v1
+    # - name: Install checkov
+    #   id: checkovinstall
+    #   run: brew install checkov
+    #   shell: bash
+    #   if: github.event_name == 'pull_request'
+    # - name: Checkov Static Code Analysis
+    #   id: checkov-report
+    #   run: |
+    #     mkdir $GITHUB_WORKSPACE/checkov-report
+    #     checkov -f $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json --output junitxml --output-file-path $GITHUB_WORKSPACE/checkov-report
+    #   shell: bash
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
       with:
-        name: JEST Tests                                            # Name of the check run which will be created
-        path: $GITHUB_WORKSPACE/checkov-report/results_junitxml.xml # Path to test results (inside artifact .zip)
-        reporter: java-junit                                        # Format of test results
-      if: github.event_name == 'pull_request' && (success() || failure())
+        python-version: 3.8
+    - name: Test with Checkov
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        file: $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json
+        framework: terraform
+        output_format: junitxml
+      if: github.event_name == 'pull_request'
+    # - name: Publish checkov Test Results
+    #   uses: dorny/test-reporter@v1
+    #   with:
+    #     name: JEST Tests                                            # Name of the check run which will be created
+    #     path: $GITHUB_WORKSPACE/checkov-report/results_junitxml.xml # Path to test results (inside artifact .zip)
+    #     reporter: java-junit                                        # Format of test results
+    #   if: github.event_name == 'pull_request' && (success() || failure())
     - name: Upload Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
