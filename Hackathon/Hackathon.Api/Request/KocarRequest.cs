@@ -5,7 +5,7 @@ public record KocarRequest(
     bool UtsteinCohort,
     bool Vasc,
     bool InitialRhythm,
-    bool Age,
+    int Age,
     bool NormalEcg,
     bool Ste,
     bool Rbbb,
