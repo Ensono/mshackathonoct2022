@@ -17,8 +17,20 @@ public class KocarController : ControllerBase
     }
 
     [HttpPost(Name = "GetKocarScore")]
-    public ActionResult<KocarResponse> Post(KocarInputs request)
+    public ActionResult<KocarResponse> Post(KocarRequest request)
     {
-        return Ok(new KocarResponse(_kocarPredictor.PredictKocar(request)));
+        var inputs = new float[]
+        {
+            request.Territ ? 1 : 0,
+            request.UtsteinCohort ? 1 : 0,
+            request.Vasc ? 1 : 0,
+            request.InitialRhythm ? 1 : 0,
+            request.Age ? 1 : 0,
+            request.NormalEcg ? 1 : 0,
+            request.Ste ? 1 : 0,
+            request.Rbbb ? 1 : 0,
+            request.Tte ? 1 : 0
+        };
+        return Ok(new KocarResponse(_kocarPredictor.PredictKocar(inputs)));
     }
 }
