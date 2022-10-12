@@ -25,7 +25,12 @@ public class KocarController : ControllerBase
             request.UtsteinCohort ? 1 : 0,
             request.Vasc ? 1 : 0,
             request.InitialRhythm ? 1 : 0,
-            request.Age ? 1 : 0,
+            request.Age switch
+            {
+                <= 40 => 0,
+                <= 70 => 1,
+                > 70 => 2
+            },
             request.NormalEcg ? 1 : 0,
             request.Ste ? 1 : 0,
             request.Rbbb ? 1 : 0,
