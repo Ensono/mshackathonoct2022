@@ -27,7 +27,8 @@ public class KocarPredictor
 
         using var output = _inferenceSession.Run(featuresInput);
         var result = output.Last().AsTensor<float>().GetValue(0);
-        _logger.LogInformation("Received inputs {Inputs}. Output = {Result}", inputs, result);
+        
+        _logger.LogInformation("KOCAR: Inputs: {Inputs}, Output: {Output}", inputs, result);
 
         return result;
     }

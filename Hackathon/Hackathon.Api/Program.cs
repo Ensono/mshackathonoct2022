@@ -1,5 +1,4 @@
 using Hackathon.Api.Predictors;
-using Microsoft.ML.OnnxRuntime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<KocarPredictor>();
+builder.Services.AddSingleton<MiraclePredictor>();
 
 var app = builder.Build();
 
