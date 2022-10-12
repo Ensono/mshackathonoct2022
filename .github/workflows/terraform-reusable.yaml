@@ -128,6 +128,7 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
+      if: github.event_name == 'pull_request'
     - name: Test with Checkov
       id: checkov
       uses: bridgecrewio/checkov-action@master
@@ -155,6 +156,22 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     steps:
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Prepare environment variables
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      run: |
+          # Parse Azure secret into Terraform variables
+          $servicePrincipal = ($env:AZURE_CREDENTIALS | ConvertFrom-Json)
+          $env:ARM_CLIENT_ID = $servicePrincipal.clientId
+          $env:ARM_CLIENT_SECRET = $servicePrincipal.clientSecret
+          $env:ARM_SUBSCRIPTION_ID = $servicePrincipal.subscriptionId
+          $env:ARM_TENANT_ID = $servicePrincipal.tenantId
+          # Save environment variable setup for subsequent steps
+          Get-ChildItem -Path Env: -Recurse -Include ARM_*,TF_VAR_* | ForEach-Object {Write-Output "$($_.Name)=$($_.Value)"} >> $env:GITHUB_ENV
+      shell: pwsh
     - name: HashiCorp - Setup Terraform
       uses: hashicorp/setup-terraform@v2.0.0
       with:
