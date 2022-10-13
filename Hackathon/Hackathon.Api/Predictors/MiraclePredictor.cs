@@ -21,6 +21,7 @@ public class MiraclePredictor
     private static int CalculateMiracleScore(MiracleInput input)
     {
         var miracleScore = input.UnWitnessed +
+            input.InitialRhythm +
             input.TwoRhythms +
             input.Age60 +
             2 * input.Age80 +
