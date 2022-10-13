@@ -133,7 +133,7 @@ jobs:
       id: checkov
       uses: bridgecrewio/checkov-action@master
       with:
-        file: $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json
+        file: ${{ inputs.environment }}-${{ inputs.region }}tfplan.json
         # framework: terraform
         output_format: junitxml
       if: github.event_name == 'pull_request'
