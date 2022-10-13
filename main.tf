@@ -28,7 +28,7 @@ resource "azurerm_container_registry" "this" {
   sku                 = "Standard"
   admin_enabled       = false
   lifecycle {
-    ignore_changes = [ admin_enabled ]
+    ignore_changes = [admin_enabled]
   }
 }
 
@@ -61,7 +61,10 @@ resource "azurerm_linux_web_app" "this" {
 
   site_config {}
   lifecycle {
-    ignore_changes = [ app_settings, logs ]
+    ignore_changes = [
+      app_settings,
+      logs
+    ]
   }
 }
 
