@@ -134,16 +134,18 @@ jobs:
       uses: bridgecrewio/checkov-action@master
       with:
         file: ${{ inputs.environment }}-${{ inputs.region }}tfplan.json
-        # framework: terraform
+        soft_fail: true
         output_format: junitxml
       if: github.event_name == 'pull_request'
-    # - name: Publish checkov Test Results
-    #   uses: dorny/test-reporter@v1
-    #   with:
-    #     name: JEST Tests                                            # Name of the check run which will be created
-    #     path: $GITHUB_WORKSPACE/checkov-report/results_junitxml.xml # Path to test results (inside artifact .zip)
-    #     reporter: java-junit                                        # Format of test results
-    #   if: github.event_name == 'pull_request' && (success() || failure())
+    - name: checkov results to file
+      run: echo $CHECKOV_RESULTS > checkov-results.xml
+    - name: Publish checkov Test Results
+      uses: dorny/test-reporter@v1
+      with:
+        name: JUNIT Tests                                            # Name of the check run which will be created
+        path: checkov-results.xml # Path to test results (inside artifact .zip)
+        reporter: java-junit                                        # Format of test results
+      if: github.event_name == 'pull_request' && (success() || failure())
     - name: Create archive
       run: tar cvfz terraform.tar.gz .terraform .terraform.lock.hcl ${{ inputs.environment }}-${{ inputs.region }}.tfplan
     - name: Upload Artifact
