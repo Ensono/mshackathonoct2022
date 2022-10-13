@@ -27,6 +27,9 @@ resource "azurerm_container_registry" "this" {
   location            = var.location
   sku                 = "Standard"
   admin_enabled       = false
+  lifecycle {
+    ignore_changes = [admin_enabled]
+  }
 }
 
 resource "azurerm_machine_learning_workspace" "this" {
@@ -55,6 +58,26 @@ resource "azurerm_linux_web_app" "this" {
   resource_group_name = var.resource_group
   location            = var.location
   service_plan_id     = azurerm_service_plan.this.id
+  app_settings = {
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.this.connection_string
+  }
 
   site_config {}
+  lifecycle {
+    ignore_changes = [
+      app_settings["DOCKER_REGISTRY_SERVER_PASSWORD"],
+      app_settings["DOCKER_REGISTRY_SERVER_URL"],
+      app_settings["DOCKER_REGISTRY_SERVER_USERNAME"],
+      app_settings["WEBSITES_ENABLE_APP_SERVICE_STORAGE"],
+      logs
+    ]
+  }
+}
+
+resource "azurerm_static_site" "this" {
+  name                = "mshackathonoct2022"
+  resource_group_name = var.resource_group
+  location            = "West Europe"
+  sku_size            = "Standard"
+  sku_tier            = "Standard"
 }
