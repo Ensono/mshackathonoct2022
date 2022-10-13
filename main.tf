@@ -27,6 +27,9 @@ resource "azurerm_container_registry" "this" {
   location            = var.location
   sku                 = "Standard"
   admin_enabled       = false
+  lifecycle {
+    ignore_changes = [ admin_enabled ]
+  }
 }
 
 resource "azurerm_machine_learning_workspace" "this" {
@@ -57,4 +60,15 @@ resource "azurerm_linux_web_app" "this" {
   service_plan_id     = azurerm_service_plan.this.id
 
   site_config {}
+  lifecycle {
+    ignore_changes = [ app_settings, logs ]
+  }
+}
+
+resource "azurerm_static_site" "this" {
+  name                = "mshackathonoct2022"
+  resource_group_name = var.resource_group
+  location            = "West Europe"
+  sku_size            = "Standard"
+  sku_tier            = "Standard"
 }

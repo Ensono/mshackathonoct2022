@@ -134,7 +134,7 @@ jobs:
       uses: bridgecrewio/checkov-action@master
       with:
         file: $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}tfplan.json
-        framework: terraform
+        # framework: terraform
         output_format: junitxml
       if: github.event_name == 'pull_request'
     # - name: Publish checkov Test Results
@@ -144,11 +144,13 @@ jobs:
     #     path: $GITHUB_WORKSPACE/checkov-report/results_junitxml.xml # Path to test results (inside artifact .zip)
     #     reporter: java-junit                                        # Format of test results
     #   if: github.event_name == 'pull_request' && (success() || failure())
+    - name: Create archive
+      run: tar cvfz terraform.tar.gz .terraform .terraform.lock.hcl ${{ inputs.environment }}-${{ inputs.region }}.tfplan
     - name: Upload Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
         name: "${{ inputs.environment }}-${{ inputs.region }}.tfplan"
-        path: "./"
+        path: "/terraform.tar.gz"
         retention-days: 5
       if: github.event_name != 'pull_request'
   terraformCD:
@@ -180,7 +182,9 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: "${{ inputs.environment }}-${{ inputs.region }}.tfplan"
-        path: "./"
+        path: "/"
+    - name: Extract archive
+      run: tar xvfz terraform.tar.gz
     - name: terraform apply
       id: apply
       run: terraform apply -input=false $GITHUB_WORKSPACE/${{ inputs.environment }}-${{ inputs.region }}.tfplan
