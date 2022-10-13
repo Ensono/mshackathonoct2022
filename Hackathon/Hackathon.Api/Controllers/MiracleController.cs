@@ -25,7 +25,7 @@ namespace Hackathon.Api.Controllers
                 request.InitialRhythm ? 1 : 0,
                 request.TwoRhythms ? 1 : 0,
                 request.Age > 60 ? 1 : 0,
-                request.Age > 80 ? 2 : 0,
+                request.Age > 80 ? 1 : 0,
                 request.LowpH ? 1 : 0,
                 request.UnreactivePupils ? 1 : 0,
                 request.Adrenaline ? 1 : 0);
