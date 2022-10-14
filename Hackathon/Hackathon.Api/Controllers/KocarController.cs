@@ -22,9 +22,9 @@ public class KocarController : ControllerBase
     {
         var input = new KocarInput(
             request.Territ ? 1 : 0,
-            request.UtsteinCohort ? 1 : 0,
+            request.UtsteinCohort ? 0 : 1,
             request.Vasc ? 1 : 0,
-            request.InitialRhythm ? 1 : 0,
+            request.InitialRhythm ? 0 : 1,
             request.Age switch
             {
                 <= 40 => 0,
@@ -34,7 +34,7 @@ public class KocarController : ControllerBase
             request.NormalEcg ? 1 : 0,
             request.Ste ? 1 : 0,
             request.Rbbb ? 1 : 0,
-            request.Tte ? 1 : 0);
+            request.Tte ? 0 : 1);
         
         return Ok(new KocarResponse(_kocarPredictor.PredictKocar(input)));
     }
