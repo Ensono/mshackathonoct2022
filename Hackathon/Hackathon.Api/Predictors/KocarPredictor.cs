@@ -39,7 +39,7 @@ public class KocarPredictor
             { NamedOnnxValue.CreateFromTensor(TrainedModelInputTensorName, inputTensor) };
 
         using var output = _inferenceSession.Run(featuresInput);
-        var result = output.Last().AsTensor<float>().GetValue(0);
+        var result = output.Last().AsTensor<float>().GetValue(1);
         
         _logger.LogInformation("KOCAR: Inputs: {Inputs}, Output: {Output}", input, result);
 
